@@ -28,6 +28,7 @@
         android:layout_marginEnd="284dp"
         android:text="@string/Description_label"
         android:textSize="16sp"
+        android:scrollbars="vertical"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

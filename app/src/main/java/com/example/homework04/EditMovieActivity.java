@@ -34,7 +34,7 @@ public class EditMovieActivity extends AppCompatActivity {
 
         setTitle("Edit Movie");
 
-        Movie movie =(Movie) getIntent().getExtras().getSerializable(MainActivity.EDIT_MOVIE);
+        Movie movie =(Movie) getIntent().getExtras().getParcelable(MainActivity.EDIT_MOVIE);
 
         //finding the genre position
 

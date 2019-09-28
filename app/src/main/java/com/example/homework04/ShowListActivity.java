@@ -3,8 +3,8 @@ package com.example.homework04;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,9 +27,11 @@ public class ShowListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_list);
 
-        movieList = (ArrayList<Movie>) getIntent().getExtras().getSerializable("list") ;
+        movieList =  getIntent().getExtras().getParcelableArrayList("list") ;
+        Log.d("Demo movielist" , movieList+"");
 
-        check=(String)getIntent().getExtras().getSerializable("check");
+
+        check=(String)getIntent().getExtras().getString("check");
         header=findViewById(R.id.textViewHead);
 
         if(check.equals("year")){
@@ -73,6 +75,8 @@ public class ShowListActivity extends AppCompatActivity {
     public void viewDisplay(Movie movie){
         name=findViewById(R.id.Text_Name);
         description=findViewById(R.id.Text2_description);
+
+
         genre=findViewById(R.id.textViewgenreDisplay);
         rating=findViewById(R.id.textViewRatingDisplay);
         year=findViewById(R.id.textViewYearDisplay);

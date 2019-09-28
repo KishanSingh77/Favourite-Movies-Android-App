@@ -144,11 +144,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ADD_REQ_CODE && resultCode == RESULT_OK){
-            Movie addedMovie  = (Movie)data.getExtras().getSerializable(ADD_MOVIE);
+            Movie addedMovie  = (Movie)data.getExtras().getParcelable(ADD_MOVIE);
             movieList.add(addedMovie);
         }
         else   if(requestCode == EDIT_REQ_CODE && resultCode == RESULT_OK){
-            Movie editedMovie  = (Movie)data.getExtras().getSerializable(EDIT_MOVIE);
+            Movie editedMovie  = (Movie)data.getExtras().getParcelable(EDIT_MOVIE);
             if(!editedMovie.equals(movieList.get(currentEdit))){
                 movieList.remove(movieList.get(currentEdit));
                 movieList.add(editedMovie);
