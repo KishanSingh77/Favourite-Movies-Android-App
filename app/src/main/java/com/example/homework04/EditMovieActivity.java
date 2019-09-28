@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class EditMovieActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class EditMovieActivity extends AppCompatActivity {
     private SeekBar movieRatingSeekBar ;
     private EditText movieNameEditText , movieDescriptionEditText , movieYearEditText , movieImdbEditText ;
     private Button saveChanges_button ;
+    private TextView rate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,16 +40,16 @@ public class EditMovieActivity extends AppCompatActivity {
 
         for(int i = 0 ; i < paths.length ; i++)
         {
-            if(paths[i].equals(movie.genre)) genrePosition = i ;
+            if(paths[i].equals(movie.getGenre())) genrePosition = i ;
             Toast.makeText(getApplicationContext() , "selected"+genrePosition+"",Toast.LENGTH_SHORT).show();
 
         }
 
 
-        saveChanges_button = findViewById(R.id.button_saveChanges);
+        saveChanges_button = findViewById(R.id.button_finish);
         genreSpinner = findViewById(R.id.spinner_genreDropDown);
-        movieNameEditText = findViewById(R.id.editText_Name);
-        movieDescriptionEditText = findViewById(R.id.editText2_description);
+        movieNameEditText = findViewById(R.id.Text_Name);
+        movieDescriptionEditText = findViewById(R.id.Text2_description);
         movieYearEditText = findViewById(R.id.editText3_Year);
         movieImdbEditText = findViewById(R.id.editText4_ImdbLink);
 
@@ -56,11 +58,11 @@ public class EditMovieActivity extends AppCompatActivity {
 
         //setting default values from movies object
 
-        movieNameEditText.setText(movie.name);
-        movieDescriptionEditText.setText(movie.description);
-        movieYearEditText.setText(movie.year+"") ;
-        movieImdbEditText.setText(movie.imDb);
-        movieRatingSeekBar.setProgress(movie.rating);
+        movieNameEditText.setText(movie.getName());
+        movieDescriptionEditText.setText(movie.getDescription());
+        movieYearEditText.setText(movie.getYear()+"") ;
+        movieImdbEditText.setText(movie.getImDb());
+        movieRatingSeekBar.setProgress(movie.getRating());
 
 
 
@@ -72,6 +74,7 @@ public class EditMovieActivity extends AppCompatActivity {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genreSpinner.setAdapter(adapter);
+        genreSpinner.setPrompt("Select");
         genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -89,11 +92,12 @@ public class EditMovieActivity extends AppCompatActivity {
         genreSpinner.setSelection(genrePosition);
 
         //rating seekbar
-
+        rate=findViewById(R.id.rate);
         movieRatingSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 movieRating = progress ;
+                rate.setText(progress+"");
             }
 
             @Override

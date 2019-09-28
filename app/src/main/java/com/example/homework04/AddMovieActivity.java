@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddMovieActivity extends AppCompatActivity {
@@ -22,7 +23,7 @@ public class AddMovieActivity extends AppCompatActivity {
     private SeekBar movieRatingSeekBar ;
     private EditText movieNameEditText , movieDescriptionEditText , movieYearEditText , movieImdbEditText ;
     private Button addMovie_button ;
-
+    private TextView rate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +32,10 @@ public class AddMovieActivity extends AppCompatActivity {
         setTitle("Add Movie");
 
 
-        addMovie_button = findViewById(R.id.button_saveChanges);
+        addMovie_button = findViewById(R.id.button_finish);
         genreSpinner = findViewById(R.id.spinner_genreDropDown);
-        movieNameEditText = findViewById(R.id.editText_Name);
-        movieDescriptionEditText = findViewById(R.id.editText2_description);
+        movieNameEditText = findViewById(R.id.Text_Name);
+        movieDescriptionEditText = findViewById(R.id.Text2_description);
         movieYearEditText = findViewById(R.id.editText3_Year);
         movieImdbEditText = findViewById(R.id.editText4_ImdbLink);
 
@@ -50,10 +51,11 @@ public class AddMovieActivity extends AppCompatActivity {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genreSpinner.setAdapter(adapter);
+
         genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext() , position+"",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext() , position+"",Toast.LENGTH_SHORT).show();
                 movieGenre = paths[position];
             }
 
@@ -64,11 +66,13 @@ public class AddMovieActivity extends AppCompatActivity {
         });
 
         //rating seekbar
+        rate=findViewById(R.id.rate);
 
         movieRatingSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 movieRating = progress ;
+                rate.setText(progress+"");
             }
 
             @Override
@@ -88,6 +92,8 @@ public class AddMovieActivity extends AppCompatActivity {
         addMovie_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
 
                 //take values from form
                 movieName = movieNameEditText.getText().toString();

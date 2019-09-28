@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     Button listByRating_button ;
     public static final int ADD_REQ_CODE = 100 ;
     public static final int EDIT_REQ_CODE = 101 ;
+    public static final int VIEW_LIST_YEAR = 102 ;
+    public static final int VIEW_LIST_RATING = 103 ;
     public static final String ADD_MOVIE = "ADD_MOVIE" ;
     public static final String EDIT_MOVIE = "EDIT_MOVIE" ;
     ArrayList<Movie> movieList ;
@@ -36,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         movieList = new ArrayList<>();
         addMovie_button = findViewById(R.id.button_addMovie);
-        deleteMovie_button = findViewById(R.id.button3_deleteMovie);
         editMovie_button = findViewById(R.id.button2_edit);
+        deleteMovie_button = findViewById(R.id.button3_deleteMovie);
         listByYear_button = findViewById(R.id.button4_listByYear);
         listByRating_button = findViewById(R.id.button5_listByRating);
 
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 String[] movies = new String[movieList.size()];
                 int i= 0 ;
                 for(Movie m : movieList)
-                    movies[i++] = m.name;
+                    movies[i++] = m.getName();
 
                 AlertDialog.Builder build= new AlertDialog.Builder(MainActivity.this);
                 build.setTitle("Pick a Movie");
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 String[] movies = new String[movieList.size()];
                 int i= 0 ;
                 for(Movie m : movieList)
-                    movies[i++] = m.name;
+                    movies[i++] = m.getName();
 
                 AlertDialog.Builder build= new AlertDialog.Builder(MainActivity.this);
                 build.setTitle("Pick a Movie");
@@ -105,6 +107,36 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        listByYear_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(movieList.size()==0){
+                    Toast.makeText(MainActivity.this, "No movies in database!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Intent intent = new Intent(MainActivity.this , ShowListActivity.class);
+                intent.putExtra("list", (ArrayList<Movie>)movieList);
+                intent.putExtra("check", "year");
+                startActivityForResult(intent , VIEW_LIST_YEAR);
+            }
+        });
+
+        listByRating_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(movieList.size()==0){
+                    Toast.makeText(MainActivity.this, "No movies in database!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Intent intent = new Intent(MainActivity.this , ShowListActivity.class);
+                intent.putExtra("list", (ArrayList<Movie>)movieList);
+                intent.putExtra("check", "rating");
+                startActivityForResult(intent , VIEW_LIST_YEAR);
+            }
+        });
+
+
 
     }
 
@@ -125,6 +157,9 @@ public class MainActivity extends AppCompatActivity {
 
         else if(resultCode == RESULT_CANCELED){
             Log.d("START_ACTIVITY_RESULT" , "Cancelled");
+        }
+        else if(resultCode == VIEW_LIST_YEAR && resultCode == RESULT_OK){
+            Log.d("START_ACTIVITY_RESULT" , "Back");
         }
 
     }

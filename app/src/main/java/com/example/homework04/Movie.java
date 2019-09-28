@@ -1,15 +1,16 @@
 package com.example.homework04;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Movie implements Serializable {
 
-    String name;
-    String description ;
-    String genre ;
-    int rating ;
-    int year;
+    private String name;
+    private String description ;
+    private String genre ;
+    private int rating ;
+    private  int year;
 
     @Override
     public String toString() {
@@ -23,7 +24,7 @@ public class Movie implements Serializable {
                 '}';
     }
 
-    String imDb ;
+    private String imDb ;
 
     @Override
     public boolean equals(Object o) {
@@ -103,4 +104,16 @@ public class Movie implements Serializable {
 
 
 
+
+
+
+
+}
+class SortbyYear implements Comparator<Movie>
+{
+
+    public int compare(Movie a, Movie b)
+    {
+        return a.getYear() - b.getYear();
+    }
 }
