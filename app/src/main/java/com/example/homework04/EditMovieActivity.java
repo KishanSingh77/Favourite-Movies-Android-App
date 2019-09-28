@@ -18,7 +18,7 @@ import android.widget.Toast;
 public class EditMovieActivity extends AppCompatActivity {
 
     private Spinner genreSpinner;
-    private static   String[] paths = {"Action", "Animation", "Comedy", "Documentary", "Family", "Horror",
+    private static   String[] paths = {"Select","Action", "Animation", "Comedy", "Documentary", "Family", "Horror",
             " Crime and Others"};
     private String movieName , movieDescription , movieGenre , movieImdb ;
     private int  movieRating , movieYear ;
@@ -120,13 +120,72 @@ public class EditMovieActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+                //validation
+
+                if (movieNameEditText.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "Enter a movie name", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+                if (movieDescriptionEditText.getText().toString().trim().length() == 0)
+                {
+                    Toast.makeText(getApplicationContext(), "Enter description for the movie", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                if (movieGenre.equals("Select"))
+                {
+                    Toast.makeText(getApplicationContext(), "You didn't select any genre", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+                if (movieRatingSeekBar.getProgress() ==0)
+                {
+                    Toast.makeText(getApplicationContext(), "Select rating between 1-5 range", Toast.LENGTH_SHORT).show();                    return ;
+                }
+                if (movieYearEditText.getText().toString().isEmpty()
+                        || movieYearEditText.getText().toString().length() < 4
+                        || Integer.parseInt(movieYearEditText.getText().toString()) < 1900
+                        || Integer.parseInt(movieYearEditText.getText().toString()) > 2019
+                )
+                {
+                    Toast.makeText(getApplicationContext(), "Enter a valid year within 1900 - 2019 range", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+                if (movieImdbEditText.getText().toString().isEmpty())
+                {
+
+                    Toast.makeText(getApplicationContext(), "Enter a IMDB link", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                if (!((movieImdbEditText.getText().toString().toLowerCase().startsWith("www.imdb.com/"))  ))
+                {
+                    Toast.makeText(getApplicationContext(), "Enter a valid IMDB link", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                if (movieImdbEditText.getText().toString().length() > 0 && movieImdbEditText.getText().toString().contains(" "))
+                {
+                    Toast.makeText(getApplicationContext(), "Spaces not allowed in IMDB link", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+                Log.d("Demo" , "Successsss");
+                Log.d("Demo" , movieRatingSeekBar.getProgress()+"");
+                Log.d("Demo" , movieRating+"");
+
+
+
                 //take values from form
                 movieName = movieNameEditText.getText().toString();
                 movieDescription = movieDescriptionEditText.getText().toString();
                 movieYear = Integer.parseInt(movieYearEditText.getText().toString());
                 movieImdb = movieImdbEditText.getText().toString();
-                Log.d("Change " , new Movie(movieName,movieDescription,movieGenre,movieRating,movieYear,movieImdb)+"");
+                movieRating = movieRatingSeekBar.getProgress();
 
+
+Log.d("Demo edit output" ,new Movie(movieName,movieDescription,movieGenre,movieRating,movieYear,movieImdb)+"");
                 Intent goBackIntent = new Intent();
                 goBackIntent.putExtra(MainActivity.EDIT_MOVIE , new Movie(movieName,movieDescription,movieGenre,movieRating,movieYear,movieImdb));
                 setResult(RESULT_OK , goBackIntent);
